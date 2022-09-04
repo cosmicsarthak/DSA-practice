@@ -1,0 +1,38 @@
+The sequence in which I am Learning new things in C++.
+
+Track of my C++ learning Journey==>
+
+1. Syntax
+2.Array
+3.Vector
+4.*max_element()
+5.vec.begin() and vec.end()
+6.Linear Search
+7.Binary Search
+8.Selection Sort
+9.Bubble Sort
+10. Use scanf instead of cin 
+and use printf instead of cout
+11. Use "\n" instead of endl
+12. Use "ios::sync_with_stdio(false);" if using cin and cout
+13. Use swap(sameVector.at(i), sameVector.at(j)) for interchanging the values of two elements 	  in a vector.
+14. sort() in C++ STL
+15.Insertion sort
+16. Comparision between different Sorting Algorithms
+17. Learnt Quick and Merge sort are the fastest sorting Algorithms and C++ std::sort() is the best and can be used in most cases
+18. We can use "and" or "&&" in C++. Both have the same meaning in C++.
+19. Heard about "auto" and "decltype" i.e Type Inference in C++
+20. Learnt different Vector functions:reserve,insert,pop_back,epty,clear,erase,front,back
+21. Heard about how to meassure execution time in C++ using std::chrono "#include <chrono>"
+22.	Use "emplace()" instead of "insert" to add SINGLE elements inside a vector
+23. Learnt Kadane's Algorithm for finding "Maximum Subarray Sum".
+24. Learnt Matrix printing using Vectors
+25. Learnt Matrix Transpose for both square and Rectangle matrix
+26. Learnt Printing Matrix in spiral order using 4 different points: 	 Left, Right, Top, Bottom.
+27. Learnt Multiplication of Matrix
+28. Learnt Searching in 2D Matrix(Ordered Matrix) using "Top, Right" 	 or "Bottom, Left";
+29. Learnt count_if in C++ <algorithm> STL.
+30. Relearning again
+31. Learnt to take unknown number of user inputs 
+32. Learnt "find()" from <algorithm> and 'How it is better than "binary_search()" when the given vector is not sorted.
+33. "string::npos" is used with find() in "string"

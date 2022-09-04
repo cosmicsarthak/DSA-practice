@@ -1,0 +1,12 @@
+Teaching is the highest form of understanding.
+- Aristotle
+
+
+1. Learnt ArrayList Basics
+2. Learnt hasNext()
+3. Got to know that Abstract Adta Types(ADT) are : "List", "Queue" and "Stack" 
+4. Learnt to take Input from a single line as String and Convert it to Integer using Integer.parseInt() and then added it to ArrayList
+    for (String el:sc.nextLine().split("\\s+")) {
+        al.add(Integer.parseInt(el));
+    }
+5. Always 'type cast' to (int) when using "Math.random()"

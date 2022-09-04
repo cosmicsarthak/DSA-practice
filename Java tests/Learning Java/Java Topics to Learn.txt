@@ -1,0 +1,259 @@
+## Learn Collections Library
+## Find out about Jython
+## Learn BufferReader
+
+MUST LEARN:
+* https://www.geeksforgeeks.org/retrieving-elements-from-collection-for-each-iterator-listiterator-enumerationiterator/
+* https://www.geeksforgeeks.org/iterator-vs-foreach-in-java/
+* https://www.geeksforgeeks.org/iterators-in-java/
+* lamda expressions
+* method reference
+
+
+1. Learn about printf
+2. String.format()
+3. .useDelimiter() in Scanner
+4. https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/Scanner.html
+5. Learn ArrayList
+6. Learn List
+7. Learn vector in java  //not neccessary
+8. Learn Iterator in ArrayList
+9. Learn Enumeration //https://www.geeksforgeeks.org/iterators-in-java/
+10. Different ways to print an array/LinkedList/ArrayList in reverse order
+11. Use for each loop to reverse an array/ ArrayList
+12. Learn Deque
+13. forEach method in java
+14. Learn about "operator overloading"
+15. Learn Abstract Data Types
+16. Learn "this" in java
+17. Object and integer types in Generic Programming 
+18. Primitive data type vs. Object data type in Java  (IMPORTANT)
+19. Learn "Spliterator" which is  ana alternative of "Iterator"
+20. How to use `offerFirst()`, `pollFirst()`, `offerLast()`, `pollLast()`,`peekLast()` & `peekLast()` for `LIFO` and `FIFO` operations as `Stack` and ` Queue`
+21. Regex expressions in Java, "\\s" vs. "\\s+"
+        for (String el : sc.nextLine().split("\\s+")) {
+            al3.add(Integer.parseInt(el));
+        }
+        System.out.println(al3);
+
+22. Integer.toString(n).chars().map(a->a-'0').toArray() 👇
+    https://stackoverflow.com/questions/14743165/simple-number-to-array-with-individual-digits
+
+23.
+
+
+24.
+
+
+25.
+
+
+26.
+
+
+27.
+
+
+28.
+
+
+29.
+
+
+30.
+
+
+
+
+<=======================================================================================================>
+Codes to Understand:
+>>>==================<<<--->>>==
+Write a program that finds out the closest integer to a given one from an array. If you find several integers with the same distance to the N, you should output all of them in the ascending order. If there are several equal numbers, output them all.
+
+Input: a set of integers and a number N.
+
+Output: some number(s) from the given array.
+---
+
+Sample Input 1:
+
+1 2 4 5
+3
+Sample Output 1:
+
+2 4
+>>>==================<<<--->>>==
+import java.util.*;👆👆👆👆
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int[] numbers = Arrays.stream(scanner.nextLine().split("\\s+"))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        int n = scanner.nextInt();
+
+        int minDelta = Arrays.stream(numbers)
+                .map(i -> Math.abs(n - i))
+                .min()
+                .orElse(0);
+        Arrays.stream(numbers)
+                .filter(i -> Math.abs(n - i) == minDelta)
+                .sorted()
+                .forEach(i -> System.out.print(i + " "));
+    }
+}
+
+>>>==================<<<--->>>==
+import java.util.*;👆👆👆👆
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Integer> al = Arrays
+                .stream(scanner.nextLine().split("\\s+"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toCollection(ArrayList::new));
+        int n = scanner.nextInt();
+        int d = al.stream().map(i -> Math.abs(i - n)).min(Comparator.naturalOrder()).get();
+        al.sort(Comparator.naturalOrder());
+        al.removeIf(i -> Math.abs(i - n) > d);
+        for (int o : al) {
+            System.out.print(o + " ");
+        }
+    }
+}
+
+>>>==================<<<--->>>==
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        String[] string = scanner.nextLine().split(" ");
+        ArrayList<Integer> list = Arrays.stream(string)
+                                        .map(Integer::parseInt)
+                                        .collect(Collectors.toCollection(ArrayList::new));
+        int number = scanner.nextInt();
+
+        ArrayList<Integer> distanceList = list.stream()
+                                                .map(num -> Math.abs(number - num))
+                                                .collect(Collectors.toCollection(ArrayList::new));
+
+//        System.out.printf("distanceList = %s%n", distanceList);
+
+        int minimum = Collections.min(distanceList);
+
+        list.stream()
+                .filter(num -> Math.abs(number - num) == minimum)
+                .sorted()
+                .forEach(num -> System.out.print(num + " "));
+    }
+}
+>>>==================<<<--->>>==
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        // write your code here
+        Scanner scanner = new Scanner(System.in);
+
+        List<Integer> closestNums = new ArrayList<>();
+        int counter = 0;
+
+        List<Integer> nums = Arrays
+                .stream(scanner.nextLine().split("\\s+"))
+                .map(Integer::parseInt).collect(Collectors.toList());
+
+
+        int num = scanner.nextInt();
+
+        while (closestNums.isEmpty()) {
+            for (Integer integer : nums) {
+                if (num - integer == counter || integer - num == counter) {
+                    closestNums.add(integer);
+                }
+
+            }
+            counter++;
+        }
+        closestNums.stream().sorted().forEach(i -> System.out.print(i + " "));
+
+    }
+}
+
+>>>==================<<<--->>>==
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Integer> numbersList = Arrays.stream(scanner.nextLine().split("\\s"))
+                .map(Integer::parseInt)
+                .sorted()
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        int num = scanner.nextInt();
+
+        int minArrayValue = numbersList.stream()
+                .mapToInt(n -> Math.abs(n - num))
+                .min().orElse(0);
+
+        numbersList.forEach(n -> {
+            if (Math.abs(n - num) == minArrayValue) {
+                System.out.print(n + " ");
+            }
+        });
+    }
+}
+
+<=============++++++++++++++++++++++++>>>>>
+Codes to Understand:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.util.Scanner;
+import java.time.Duration;
+import java.time.LocalTime;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print(Duration.between(
+            LocalTime.of(sc.nextInt(), sc.nextInt(), sc.nextInt()),
+            LocalTime .of(sc.nextInt(), sc.nextInt(), sc.nextInt())
+        ).toSeconds());
+    }
+}
+
+<-=========>
