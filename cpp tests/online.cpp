@@ -1,61 +1,110 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int sumAll(int n)
+vector<int> spiralOrder(vector<vector<int>> &v)
 {
-    // base case
-    if (n <= 1)
+    vector<int> sol;
+    int rFirst = 0, rLast = v.size() - 1, cFirst = 0, cLast = v[0].size() - 1;
+    int r = rFirst, c = cFirst;
+    int count = v.size() * v[0].size();
+    while (count)
     {
-        return n;
+        // right
+        if (r == rFirst)
+        {
+            while (c <= cLast)
+            {
+                cerr << "right ____" << v[r][c] << endl;
+                sol.emplace_back(v[r][c]);
+                ++c;
+                cerr << "**c__" << c << endl;
+                --count;
+                cerr << count << endl;
+                if (count <= 0)
+                {
+                    return sol;
+                }
+            }
+            ++rFirst, c = cLast;
+            cerr << "cLast__." << cLast << endl;
+            cerr << "cFirst__." << cFirst << endl;
+        }
+        r = rFirst;
+
+        // down
+        if (c == cLast)
+        {
+            while (r <= rLast)
+            {
+                cerr << "down ____" << v[r][c] << endl;
+                sol.emplace_back(v[r][c]);
+                ++r;
+                --count;
+                cerr << count << endl;
+                if (count <= 0)
+                {
+                    return sol;
+                }
+            }
+            --cLast, r = rLast;
+        }
+        c = cLast;
+        cerr << "cLast__." << cLast << endl;
+        cerr << "cFirst__." << cFirst << endl;
+
+        // left
+        if (r == rLast)
+        {
+            while (c >= cFirst)
+            {
+                cerr << "left ____" << v[r][c] << endl;
+                sol.emplace_back(v[r][c]);
+                --c;
+                --count;
+                cerr << count << endl;
+                if (count <= 0)
+                {
+                    return sol;
+                }
+            }
+            --rLast, c = cFirst;
+        }
+        r = rLast;
+
+        // up
+        if (c == cFirst)
+        {
+            while (r >= rFirst)
+            {
+                cerr << "up ____" << v[r][c] << endl;
+                sol.emplace_back(v[r][c]);
+                --r;
+                --count;
+                cerr << count << endl;
+                if (count <= 0)
+                {
+                    return sol;
+                }
+            }
+            ++cFirst, r = rFirst;
+        }
+        c = cFirst;
+        cerr << "cLast__." << cLast << endl;
+        cerr << "cFirst__." << cFirst << endl;
     }
-    // recursive case
-    else
-    {
-        return (n + sumAll(n - 1));
-    }
+
+    return sol;
 }
+
 int main()
 {
 
-    vector<int> setName = {55, 900, 99, 2, 3, 4};
+    vector<vector<int>> v = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
 
-    // auto search = setName.find(2);
-    // auto search = find(setName.begin(), setName.end(), 2);
-    auto search = find(begin(setName), end(setName), 2);
-    if (search != setName.end())
-    {
-        cout << "Found and element is... " << (search - setName.begin()) << '\n';
-    }
-    else
-    {
-        cout << "Not found\n";
-    }
+    vector<int> v2(spiralOrder(v));
 
-    cout << endl;
-
-    set<int> st = {4566, 565465, 56, 557567, 342, 56756};
-
-    for (auto el : st)
+    for (auto el : v2)
     {
         cout << el << " ";
     }
-    cout << endl;
-
-    // auto lb = lower_bound(st.begin(), st.end(), 56) - st.begin();
-    // cout << (lb - st.begin());
-    auto lb = st.lower_bound(342);
-    cout << "____" << (*lb) << endl
-         << endl;
-    auto ub = st.upper_bound(342);
-    cout << "____" << (*ub) << endl
-         << endl;
-
-    // return (std::lower_bound(v.begin(), v.end(), key) - v.begin());
-
-    // unordered_set<int> ut = {4566, 565465, 56, 557567, 342, 56756};
-
-    // for (auto el : st)
-    // {
-    //     cout << el << " ";
-    // }
 }
