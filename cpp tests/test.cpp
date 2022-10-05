@@ -4,45 +4,114 @@ using namespace std;
 #define ll long long
 #define endl '\n'
 
-int postfix_to_answer(string s)
+void pr(deque<char> dq)
+{
+    cerr << "dq: ";
+    for (auto el : dq)
+    {
+        cerr << el << " ";
+    }
+    cerr << endl;
+}
+void pro(deque<int> dq)
+{
+    cerr << "dq: ";
+    for (auto el : dq)
+    {
+        cerr << el << " ";
+    }
+    cerr << endl;
+}
+
+int postfix_to_ans(string &s)
+{
+    deque<int> dq;
+    int res = 0;
+    int x;
+    string ss;
+    for (int i = 0; i < s.size(); i++)
+    {
+        if (isdigit(s.at(i)))
+        {
+            ss = s.at(i);
+            x = stoi(ss);
+            dq.emplace_back(x);
+        }
+        else if (s.at(i) == '+')
+        {
+            int b = dq.back(); // 2nd element
+            dq.pop_back();
+            int a = dq.back(); // 1st element
+            dq.pop_back();
+            dq.emplace_back(a + b);
+        }
+        else if (s.at(i) == '-')
+        {
+            int b = dq.back(); // 2nd element
+            dq.pop_back();
+            int a = dq.back(); // 1st element
+            dq.pop_back();
+            dq.emplace_back(a - b);
+        }
+        else if (s.at(i) == '*')
+        {
+            int b = dq.back(); // 2nd element
+            dq.pop_back();
+            int a = dq.back(); // 1st element
+            dq.pop_back();
+            dq.emplace_back(a * b);
+        }
+        else if (s.at(i) == '/')
+        {
+            int b = dq.back(); // 2nd element
+            dq.pop_back();
+            int a = dq.back(); // 1st element
+            dq.pop_back();
+            dq.emplace_back(a / b);
+        }
+    }
+    if (dq.size() == s.size())
+    {
+        res = stoi(s);
+    }
+    else
+    {
+        res = dq.back();
+    }
+    return res;
+}
+
+int cal(string s)
 {
     deque<int> dq;
     int res = 0;
     int x;
     string tmp;
     int a, b;
-    bool minus_available = false; // to check if (-) is at the beginning
+    bool minus_available = false;
+
     for (int i = 0; i < s.size(); i++)
     {
         if (isdigit(s.at(i)))
         {
-            // tmp = s.at(i);
-            // x = stoi(tmp);
-            // dq.emplace_back(x);
-            dq.emplace_back(s.at(i) - '0');
+            tmp = s.at(i);
+            x = stoi(tmp);
+            dq.emplace_back(x);
             if (minus_available)
             {
                 dq.back() *= -1;
                 minus_available = false;
             }
-            // while (((i + 1) < s.size()) && (isdigit(s.at(i + 1))))
-            // {
-            //     // int number = s.at(i + 1) - '0';
-            //     tmp = s.at(i); // converting char to string ; as only string can be conv to int using 'stoi'
-            //     int x = dq.back();
-            //     dq.pop_back();
-            //     dq.emplace_back(x * 10 + stoi(tmp));
-            //     ++i;
-            // }
         }
         else if (s.at(1) == '-')
         {
             // multiply  -1 to first deque value
             minus_available = true;
         }
-        else if ((i != s.size() - 1) && (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/') && (s[i + 1] == '-'))
+        else if ((i != s.size() - 1) && (s.at(i) == '+' || s.at(i) == '-' || s.at(i) == '*' || s.at(i) == '/') && (s.at(i + 1) == '-'))
         {
-            if (s[i] == '+')
+
+            if (s.at(i) == '+')
             {
                 b = dq.back();
                 dq.pop_back();
@@ -50,7 +119,7 @@ int postfix_to_answer(string s)
                 dq.pop_back();
                 dq.emplace_back((b + a) * -1);
             }
-            else if (s[i] == '-')
+            else if (s.at(i) == '-')
             {
                 b = dq.back();
                 dq.pop_back();
@@ -58,7 +127,7 @@ int postfix_to_answer(string s)
                 dq.pop_back();
                 dq.emplace_back(a + b);
             }
-            else if (s[i] == '*')
+            else if (s.at(i) == '*')
             {
                 b = dq.back();
                 dq.pop_back();
@@ -66,7 +135,7 @@ int postfix_to_answer(string s)
                 dq.pop_back();
                 dq.emplace_back((a * b) * -1);
             }
-            else if (s[i] == '-')
+            else if (s.at(i) == '/')
             {
                 b = dq.back();
                 dq.pop_back();
@@ -74,19 +143,22 @@ int postfix_to_answer(string s)
                 dq.pop_back();
                 dq.emplace_back((a / b) * -1);
             }
-            s.pop_back(); // removing that extra '-' left at the back as it doesn't have two elements left in 'dq' to compare
+            s.pop_back();
         }
-        else if ((s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/') && (s[i + 1] != '-'))
+        else if (s.at(i) == '+' || s.at(i) == '-' || s.at(i) == '*' || s.at(i) == '/')
         {
-            if (s[i] == '+')
+            if (s.at(i) == '+')
             {
                 b = dq.back(); // 2nd element
                 dq.pop_back();
                 a = dq.back(); // 1st element
                 dq.pop_back();
                 dq.emplace_back(a + b);
+                cerr << "dq: ";
+                pro(dq);
+                cerr << endl;
             }
-            else if (s[i] == '-')
+            else if (s.at(i) == '-')
             {
                 b = dq.back(); // 2nd element
                 dq.pop_back();
@@ -94,7 +166,7 @@ int postfix_to_answer(string s)
                 dq.pop_back();
                 dq.emplace_back(a - b);
             }
-            else if (s[i] == '*')
+            else if (s.at(i) == '*')
             {
                 b = dq.back(); // 2nd element
                 dq.pop_back();
@@ -102,7 +174,7 @@ int postfix_to_answer(string s)
                 dq.pop_back();
                 dq.emplace_back(a * b);
             }
-            else if (s[i] == '/')
+            else if (s.at(i) == '/')
             {
                 b = dq.back(); // 2nd element
                 dq.pop_back();
@@ -127,27 +199,26 @@ int postfix_to_answer(string s)
     return res;
 }
 
-int calculate(string s)
+string infix_to_postfix(string s)
 {
-
     deque<char> dq;
     string resultingString = "";
     s.erase(remove(s.begin(), s.end(), ' '), s.end());
     for (int i = 0; i < s.size(); i++)
     {
-        if (isdigit(s[i]))
+        if (isdigit(s.at(i)))
         {
-            resultingString.push_back(s[i]);
+            resultingString.push_back(s.at(i));
         }
         else if (dq.empty())
         {
-            dq.emplace_back(s[i]);
+            dq.emplace_back(s.at(i));
         }
-        else if (s[i] == '(')
+        else if (s.at(i) == '(')
         {
-            dq.emplace_back(s[i]);
+            dq.emplace_back(s.at(i));
         }
-        else if (s[i] == ')')
+        else if (s.at(i) == ')')
         {
             while (dq.back() != '(')
             {
@@ -156,30 +227,30 @@ int calculate(string s)
             }
             dq.pop_back();
         }
-        else if (s[i] == '+' || s[i] == '-')
+        else if (s.at(i) == '+' || s.at(i) == '-')
         {
             if (dq.back() == '*' || dq.back() == '/' || dq.back() == '+' || dq.back() == '-')
             {
                 resultingString.push_back(dq.back());
                 dq.pop_back();
-                dq.emplace_back(s[i]);
+                dq.emplace_back(s.at(i));
             }
             else
             {
-                dq.emplace_back(s[i]);
+                dq.emplace_back(s.at(i));
             }
         }
-        else if (s[i] == '*' || s[i] == '/')
+        else if (s.at(i) == '*' || s.at(i) == '/')
         {
             if (dq.back() == '/' || dq.back() == '*')
             {
                 resultingString.push_back(dq.back());
                 dq.pop_back();
-                dq.emplace_back(s[i]);
+                dq.emplace_back(s.at(i));
             }
             else
             {
-                dq.emplace_back(s[i]);
+                dq.emplace_back(s.at(i));
             }
         }
     }
@@ -189,10 +260,7 @@ int calculate(string s)
         resultingString.push_back(dq.back());
         dq.pop_back();
     }
-
-    // postfix to answer
-    int answer = postfix_to_answer(resultingString);
-    return answer; // the resulting string
+    return resultingString; // the resulting string
 }
 
 int main()
@@ -202,8 +270,18 @@ int main()
 
     string str;
     getline(cin, str);
-    int answer = calculate(str);
+    string res = infix_to_postfix(str);
+    cerr << res << endl;
+    int answer = cal(res);
+    // int answer = postfix_to_ans(res);
     cout << answer << endl;
+
+    // int ans = calculate(str);
+    // cout << ans;
+
+    // str.erase(remove(str.begin(), str.end(), ' '), str.end());
+
+    // cout << str << endl;
 
     return 0;
 }

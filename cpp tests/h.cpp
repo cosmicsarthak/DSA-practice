@@ -1,23 +1,24 @@
 #include <bits/stdc++.h>
-#include <vector>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <climits>
-#include <numeric>
+// #include <vector>
+// #include <sstream>
+// #include <iostream>
+// #include <algorithm>
+// #include <string>
+// #include <climits>
+// #include <numeric>
 
 using namespace std;
 #define endl "\n"
 #define ll long long
 
-unsigned long long int fact(int n)
+void p(deque<int> dq)
 {
-    if (n == 1)
+    for (auto el : dq)
     {
-        return 1;
+        cout << el << " ";
     }
-    return n * fact(n - 1);
+    cout << endl;
+    cout << endl;
 }
 
 int main()
@@ -25,27 +26,18 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int n;
-    cin >> n;
-
-    unsigned long long int f = 1;
-    for (int i = 0; i < n; i++)
+    deque<int> x;
+    for (int i = 0; i < 5; i++)
     {
-        f *= i;
+        int tmp;
+        cin >> tmp;
+        x.emplace_back(tmp);
     }
+    p(x);
 
-    // unsigned long long int f = fact(n);
-    cerr << f << endl;
-    string str = to_string(f);
-    auto cnt = str.size();
-    reverse(str.begin(), str.end());
-    cerr << str << endl;
-
-    auto tmp = stoll(str);
-
-    str = to_string(tmp);
-    cerr << str << endl;
-    cout << cnt - str.size() << endl;
+    x.back() *= -1;
+    x.back() = x.back() * 10 + 78;
+    p(x);
 
     return 0;
 }

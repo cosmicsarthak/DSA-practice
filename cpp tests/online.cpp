@@ -1,110 +1,87 @@
 #include <bits/stdc++.h>
+
 using namespace std;
 
-vector<int> spiralOrder(vector<vector<int>> &v)
+void cal(string s)
 {
-    vector<int> sol;
-    int rFirst = 0, rLast = v.size() - 1, cFirst = 0, cLast = v[0].size() - 1;
-    int r = rFirst, c = cFirst;
-    int count = v.size() * v[0].size();
-    while (count)
+    deque<char> dq;
+    s.erase(remove(s.begin(), s.end(), ' '), s.end());
+    string res = "";
+    for (int i = 0; i < s.size(); i++)
     {
-        // right
-        if (r == rFirst)
+        if (isdigit(s[i]))
         {
-            while (c <= cLast)
-            {
-                cerr << "right ____" << v[r][c] << endl;
-                sol.emplace_back(v[r][c]);
-                ++c;
-                cerr << "**c__" << c << endl;
-                --count;
-                cerr << count << endl;
-                if (count <= 0)
-                {
-                    return sol;
-                }
-            }
-            ++rFirst, c = cLast;
-            cerr << "cLast__." << cLast << endl;
-            cerr << "cFirst__." << cFirst << endl;
+            res.push_back(s[i]);
         }
-        r = rFirst;
-
-        // down
-        if (c == cLast)
+        else if (dq.empty())
         {
-            while (r <= rLast)
-            {
-                cerr << "down ____" << v[r][c] << endl;
-                sol.emplace_back(v[r][c]);
-                ++r;
-                --count;
-                cerr << count << endl;
-                if (count <= 0)
-                {
-                    return sol;
-                }
-            }
-            --cLast, r = rLast;
+            dq.emplace_back(s[i]);
         }
-        c = cLast;
-        cerr << "cLast__." << cLast << endl;
-        cerr << "cFirst__." << cFirst << endl;
-
-        // left
-        if (r == rLast)
+        else if (s[i] == '(')
         {
-            while (c >= cFirst)
-            {
-                cerr << "left ____" << v[r][c] << endl;
-                sol.emplace_back(v[r][c]);
-                --c;
-                --count;
-                cerr << count << endl;
-                if (count <= 0)
-                {
-                    return sol;
-                }
-            }
-            --rLast, c = cFirst;
+            dq.emplace_back(s[i]);
         }
-        r = rLast;
-
-        // up
-        if (c == cFirst)
+        else if (s[i] == ')')
         {
-            while (r >= rFirst)
+            while (dq.back() != '(')
             {
-                cerr << "up ____" << v[r][c] << endl;
-                sol.emplace_back(v[r][c]);
-                --r;
-                --count;
-                cerr << count << endl;
-                if (count <= 0)
-                {
-                    return sol;
-                }
+                res.push_back(dq.back());
+                dq.pop_back();
             }
-            ++cFirst, r = rFirst;
+            dq.pop_back();
         }
-        c = cFirst;
-        cerr << "cLast__." << cLast << endl;
-        cerr << "cFirst__." << cFirst << endl;
+        else if (s[i] == '+' || s[i] == '-')
+        {
+            if (dq.back() == '*' || dq.back() == '/')
+            {
+                res.push_back(dq.back());
+                dq.pop_back();
+                dq.emplace_back(s[i]);
+            }
+            else
+            {
+                dq.emplace_back(s[i]);
+            }
+        }
+        else if (s[i] == '*')
+        {
+            if (dq.back() != '/')
+            {
+                dq.emplace_back(s[i]);
+            }
+            else
+            {
+                res.push_back(dq.back());
+                dq.pop_back();
+                dq.emplace_back(s[i]);
+            }
+        }
+        else if (s[i] == '/')
+        {
+            if (dq.back() != '*')
+            {
+                dq.emplace_back(s[i]);
+            }
+            else
+            {
+                res.push_back(dq.back());
+                dq.pop_back();
+                dq.emplace_back(s[i]);
+            }
+        }
     }
 
-    return sol;
-}
-
-int main()
-{
-
-    vector<vector<int>> v = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
-
-    vector<int> v2(spiralOrder(v));
-
-    for (auto el : v2)
+    for (auto el : dq)
     {
-        cout << el << " ";
+        cerr << el << " ";
     }
+    cerr << endl;
+
+    while (!dq.empty())
+    {
+        res.push_back(dq.back());
+        dq.pop_back();
+    }
+
+    cout << res << endl;
 }
