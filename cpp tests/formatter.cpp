@@ -1,26 +1,45 @@
-int countPrimes(int n)
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
 {
-    int count = 0;
-    vector<bool> is_prime(n, true);
-    if (n == 0)
-        return 0;
-    is_prime[0] = is_prime[1] = false;
-    for (int i = 2; i <= sqrt(n); i++)
+    int n;
+    cin >> n;
+    vector<pair<int, int>> v(n);
+
+    vector<int> v1(n);
+    vector<int> v2(n);
+
+    for (int i = 0; i < n; i++)
     {
-        if (is_prime[i])
+        int tmp;
+        cin >> tmp;
+        v.at(i).first = tmp;
+        v1.at(i) = tmp;
+    }
+    for (int i = 0; i < n; i++)
+    {
+        int tmp;
+        cin >> tmp;
+        v.at(i).second = tmp;
+        v2.at(i) = tmp;
+    }
+
+    int max_square = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
         {
-            for (int j = i * i; j < n; j += i)
-                is_prime[j] = false;
+            int dis = pow((v1.at(i) - v1.at(j)), 2) + pow((v2.at(i) - v2.at(j)), 2);
+            max_square = max(max_square, dis);
+        }
+
+        for (int j = i + 1; j < n; j++)
+        {
+            int dis = pow((v1.at(i) - v1.at(j)), 2) + pow((v2.at(i) - v2.at(j)), 2);
+            max_square = max(max_square, dis);
         }
     }
 
-    for (auto el : is_prime)
-    {
-        if (el == true)
-        {
-            ++count;
-        }
-    }
-
-    return count;
+    cout << max_square;
 }

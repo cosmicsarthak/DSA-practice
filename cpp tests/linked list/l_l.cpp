@@ -61,29 +61,39 @@ struct LinkedList
     void add_at_index(int index, int val)
     {
         Node *newNode = new Node(val);
+
         Node *beforeIndexNode = head; // node at (index - 1)
+        // we want the `index-1` node to be able to add the `newNode` as the `next` of this `index-1` node so that our `newNode` becomes the `indexNode`
 
-        // ⭐ we want the `index-1` node to be able to add the `newNode` as the `next` of this `index-1` node so that our `newNode` becomes the `Index-node`
-        // also we can get the Index-node by `beforeIndexNode->next`
-        for (int i = 1; i <= (index - 1); i++) // (index - 1) is the Node which is before the Index-node;    /* `i` starts with "1" as   '0' is already the head */
-        /*  We do this so that we can access the `beforeIndexNode` & also the `newNode` as (newNode = beforeIndexNode->next) */
+        for (int i = 1; i <= (index - 1); i++) // ⚠️ (index - 1) is the node which is before the indexNode;    /* `i` starts with "1" as   '0' is already the head */
+        /* ⚠️starting from `0` so that `beforeIndexNode` starts with head[as head is already at 0] and then `beforeIndexNode->next` will be pointing to the exact index and thus makes it easier for us to understand */
+        /*  We do this so that we can access the `beforeIndexNode` & also we will be making  `newNode` as (newNode = beforeIndexNode->next) */
         {
-            // `beforeIndexNode->next` means the Index-node where we want to ad the 'newNode'
+            // `beforeIndexNode->next` means the `indexNode` where we want to add the 'newNode'
             beforeIndexNode = beforeIndexNode->next; /* beforeIndex is actually (index-2) but then `beforeIndex`is getting updated to `beforeIndex->next` here */
-            /* ⚠⚠⚠  there is NO 'i=0' as its `HEAD` so,  beforeIndexNode would become (beforeIndexNode->next)=1 which we don't want */
-            // i=1 ⇢ beforeIndexNode=1 (beforeIndexNode->next)=2
-            // i=2 ⇢ beforeIndexNode=2 (beforeIndexNode->next)=3
+            /* ⚠️⚠️⚠️⚠️ there is NO 'i=0' as its `HEAD` so,  beforeIndexNode would become (beforeIndexNode->next)=1 which we don't want */
+            // i=1 ⇢⇢  beforeIndexNode=0 ⇢⇢  (beforeIndexNode->next)=1
+            // i=2 ⇢⇢  beforeIndexNode=1 ⇢⇢  (beforeIndexNode->next)=2
             // ...
-
-            cerr << i << ": .. " << beforeIndexNode->val << endl;
         }
 
-        newNode->next = beforeIndexNode->next;
-        beforeIndexNode->next = newNode;
+        /* ⭐⭐ "Reference to a Pointer": It DOES'T CHNAGE AS POINTER CHANGES ⭐⭐ */
+        Node *&indexNode = beforeIndexNode->next; // MUST BE ADDED 'AFTER' FINDING THE 'beforeIndexNode'
+        // getting the indexNode by `beforeIndexNode->next`
+        // ❌❌ if added before the value of `beforeIndexNode` then will be wrong as DOES'NT UPDATE AS POINTER CHANGES
+
+        newNode->next = indexNode; // Node *&indexNode = (beforeIndexNode->next)
+        indexNode = newNode;       // Node *&indexNode = (beforeIndexNode->next)
     }
 
     void delete_at_index(int index)
     {
+        Node *tmp = head;
+        for (int i = 0; i < index - 1; i++)
+        {
+            tmp = tmp->next;
+        }
+        tmp->next = tmp->next->next;
     }
 };
 
@@ -105,6 +115,8 @@ int main()
 
     obj->add_at_index(3, 99);
     obj->linked_list_traversal(obj->head);
+    obj->delete_at_index(4);
+    obj->linked_list_traversal(obj->head);
 
     LinkedList *obj2 = new LinkedList();
     obj2->add_at_Head(1);
@@ -112,8 +124,6 @@ int main()
     obj2->add_at_tail(7);
     obj2->add_at_Head(3);
     obj2->add_at_tail(4);
-
-    // obj->deleteAtIndex(index)
 
     return 0;
 }
