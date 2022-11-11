@@ -27,22 +27,16 @@ int main()
     {
         ll tmpsum = v.at(i);
         ll other, diff;
-        // if (v.size() > 1)
-        // {
-        //     other = total - tmpsum;
-        //     diff = abs(tmpsum - other);
-        //     cerr << v.at(i) << "(" << tmpsum << ")"
-        //          << ".[" << other << "]==" << diff << "\t";
-        //     mndif = min(mndif, diff);
-        // }
-        for (ll j = 0; j < n; j++)
+        if (v.size() > 1)
         {
             other = total - tmpsum;
             diff = abs(tmpsum - other);
             // cerr << v.at(i) << "(" << tmpsum << ")"
             //      << ".[" << other << "]==" << diff << "\t";
             mndif = min(mndif, diff);
-            // cerr << "jj: " << j << endl;
+        }
+        for (ll j = 0; j < n; j++)
+        {
             if (j != i)
             {
                 tmpsum += v.at(j);

@@ -1,0 +1,71 @@
+```cpp
+
+
+k=0: curSubset:( )
+..generating at '1' for k=0...
+
+↪️ after previous generate() at k=1,   k gets back to '0' __.
+k=1: curSubset:( )
+..generating at '2' for k=1...
+
+↪️ after previous generate() at k=2,   k gets back to '1' __.
+k=2: curSubset:( )
+..generating at '3' for k=2...
+
+↪️ after previous generate() at k=3,   k gets back to '2' __.
+k=3: curSubset:( ) ⏩ adding currSubset: () ⏩  making:  ...all subsets: { ()  }
+➕⊕ adding element 'C' now curSubset: (C,)
+..generating at '3' for k=2...
+k=3: curSubset:(C,) ⏩ adding currSubset: (C,) ⏩  making:  ...all subsets: { ()  (C,)  }
+❌__removed element: 'C' at k=2
+
+➕⊕ adding element 'B' now curSubset: (B,)
+..generating at '2' for k=1...
+k=2: curSubset:(B,)
+..generating at '3' for k=2...
+
+↪️ after previous generate() at k=3,   k gets back to '2' __.
+k=3: curSubset:(B,) ⏩ adding currSubset: (B,) ⏩  making:  ...all subsets: { ()  (C,)  (B,)  }
+➕⊕ adding element 'C' now curSubset: (B,C,)
+..generating at '3' for k=2...
+k=3: curSubset:(B,C,) ⏩ adding currSubset: (B,C,) ⏩  making:  ...all subsets: { ()  (C,)  (B,)  (B,C,)  }
+❌__removed element: 'C' at k=2
+
+❌__removed element: 'B' at k=1
+
+➕⊕ adding element 'A' now curSubset: (A,)
+..generating at '1' for k=0...
+k=1: curSubset:(A,)
+..generating at '2' for k=1...
+
+↪️ after previous generate() at k=2,   k gets back to '1' __.
+k=2: curSubset:(A,)
+..generating at '3' for k=2...
+
+↪️ after previous generate() at k=3,   k gets back to '2' __.
+k=3: curSubset:(A,) ⏩ adding currSubset: (A,) ⏩  making:  ...all subsets: { ()  (C,)  (B,)  (B,C,)  (A,)  }
+➕⊕ adding element 'C' now curSubset: (A,C,)
+..generating at '3' for k=2...
+k=3: curSubset:(A,C,) ⏩ adding currSubset: (A,C,) ⏩  making:  ...all subsets: { ()  (C,)  (B,)  (B,C,)  (A,)  (A,C,)  }
+❌__removed element: 'C' at k=2
+
+➕⊕ adding element 'B' now curSubset: (A,B,)
+..generating at '2' for k=1...
+k=2: curSubset:(A,B,)
+..generating at '3' for k=2...
+
+↪️ after previous generate() at k=3,   k gets back to '2' __.
+k=3: curSubset:(A,B,) ⏩ adding currSubset: (A,B,) ⏩  making:  ...all subsets: { ()  (C,)  (B,)  (B,C,)  (A,)  (A,C,)  (A,B,)  }
+➕⊕ adding element 'C' now curSubset: (A,B,C,)
+..generating at '3' for k=2...
+k=3: curSubset:(A,B,C,) ⏩ adding currSubset: (A,B,C,) ⏩  making:  ...all subsets: { ()  (C,)  (B,)  (B,C,)  (A,)  (A,C,)  (A,B,)  (A,B,C,)  }
+❌__removed element: 'C' at k=2
+
+❌__removed element: 'B' at k=1
+
+❌__removed element: 'A' at k=0
+
+
+
+
+```
