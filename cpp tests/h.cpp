@@ -1,24 +1,31 @@
 #include <bits/stdc++.h>
-// #include <vector>
-// #include <sstream>
-// #include <iostream>
-// #include <algorithm>
-// #include <string>
-// #include <climits>
-// #include <numeric>
-
 using namespace std;
-#define endl "\n"
+#define endl '\n'
 #define ll long long
 
-void p(deque<int> dq)
+map<char, int> mp;
+string s;
+vector<string> v;
+
+void foo(string &perm)
 {
-    for (auto el : dq)
+    if (perm.size() == s.size())
     {
-        cout << el << " ";
+        v.emplace_back(perm);
+        return;
     }
-    cout << endl;
-    cout << endl;
+    for (auto &el : mp)
+    {
+        if (el.second <= 0)
+        {
+            continue;
+        }
+        --el.second;
+        perm.push_back(el.first);
+        foo(perm);
+        perm.pop_back();
+        ++el.second;
+    }
 }
 
 int main()
@@ -26,18 +33,19 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    deque<int> x;
-    for (int i = 0; i < 5; i++)
+    cin >> s;
+    for (auto el : s)
     {
-        int tmp;
-        cin >> tmp;
-        x.emplace_back(tmp);
+        ++mp[el];
     }
-    p(x);
+    string perm;
+    foo(perm);
 
-    x.back() *= -1;
-    x.back() = x.back() * 10 + 78;
-    p(x);
+    cout << v.size() << endl;
+    for (auto el : v)
+    {
+        cout << el << endl;
+    }
 
     return 0;
 }

@@ -1,12 +1,8 @@
-import random
-import math
+def fn(n):
+  if (n == 0 or n == 1):
+    return n
 
-x = float(input("Enter x"))
-y = float(input("Enter y"))
+  return fn(n-1) + fn(n-2)
 
-d = math.sqrt(math.pow(x, 2) + math.pow(y, 2))
 
-if d > 10:
-    print("not in circle")
-else:
-    print("in circle")
+print(fn(5))

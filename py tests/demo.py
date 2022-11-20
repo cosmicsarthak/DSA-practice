@@ -1,4 +1,4 @@
-print("Line 1")
-print("Line 2", end=" \n,")
-print("Line 3", end=" ")
-print("Line 4", end="\n")
+n1 = int(input())
+n2 = int(input())
+
+print(not ((n1 / n2) % 3))
