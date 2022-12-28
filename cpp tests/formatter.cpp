@@ -1,45 +1,78 @@
 #include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
+using vi = vector<int>;
+#define pb push_back
+#define rsz resize
+#define sz(x) (int)(x).size()
+using pi = pair<int, int>;
+#define f first
+#define s second
+#define mp make_pair
+void setIO(string name = "")
+{ // name is nonempty for USACO file I/O
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); // see Fast Input & Output
+    if (sz(name))
+    {
+        freopen((name + ".in").c_str(), "r", stdin); // see Input & Output
+        freopen((name + ".out").c_str(), "w", stdout);
+    }
+}
+
+bool ok[8][8];
+
+int ans = 0;
 
 int main()
 {
-    int n;
-    cin >> n;
-    vector<pair<int, int>> v(n);
-
-    vector<int> v1(n);
-    vector<int> v2(n);
-
-    for (int i = 0; i < n; i++)
+    setIO();
+    for (int i = 0; i < 8; i++)
     {
-        int tmp;
-        cin >> tmp;
-        v.at(i).first = tmp;
-        v1.at(i) = tmp;
-    }
-    for (int i = 0; i < n; i++)
-    {
-        int tmp;
-        cin >> tmp;
-        v.at(i).second = tmp;
-        v2.at(i) = tmp;
-    }
-
-    int max_square = 0;
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = i + 1; j < n; j++)
+        string s;
+        cin >> s;
+        for (int j = 0; j < 8; j++)
         {
-            int dis = pow((v1.at(i) - v1.at(j)), 2) + pow((v2.at(i) - v2.at(j)), 2);
-            max_square = max(max_square, dis);
-        }
-
-        for (int j = i + 1; j < n; j++)
-        {
-            int dis = pow((v1.at(i) - v1.at(j)), 2) + pow((v2.at(i) - v2.at(j)), 2);
-            max_square = max(max_square, dis);
+            ok[i][j] = (s[j] == '.');
         }
     }
+    vi vals(8);
 
-    cout << max_square;
+    iota(begin(vals), end(vals), 0); // set vals to 0 1 ... 7
+
+    do
+    {
+        bool works = true;
+        bool blocked[16];
+        for (int i = 0; i < 8; i++)
+        {
+            if (!ok[i][vals[i]])
+            {
+                works = false;
+            }
+        }
+        // first mark all squares as not blocked
+        memset(blocked, false, sizeof(blocked));
+        for (int i = 0; i < 8; i++)
+        {
+            if (blocked[i + vals[i]])
+            {
+                works = false;
+            }
+            blocked[i + vals[i]] = true; // mark this diagonal
+        }
+        memset(blocked, false, sizeof(blocked));
+        for (int i = 0; i < 8; i++)
+        {
+            if (blocked[i + 7 - vals[i]])
+            {
+                works = false;
+            }
+            blocked[i + 7 - vals[i]] = true;
+        }
+        if (works)
+            ++ans;
+    } while (next_permutation(begin(vals), end(vals)));
+
+    cout << ans << '\n';
 }
