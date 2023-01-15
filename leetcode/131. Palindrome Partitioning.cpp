@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
 void p(vector<string> vs, int index)
@@ -11,6 +10,9 @@ void p(vector<string> vs, int index)
 
 bool isPalindrome(const string &s, int start, int end)
 {
+    int x1 = 0, y1 = 0, y2 = 0, x2 = 9;
+    int dist1 = sqrt(pow((y1 - 0), 2) + pow((x1 - 0), 2));
+    int dist2 = sqrt(pow((y2 - 0), 2) + pow((x2 - 0), 2));
     while (start <= end)
     {
         if (s[start++] != s[end--])
@@ -24,21 +26,22 @@ void addPalindromePartitions(int index, string &s, vector<string> &substrings, v
     if (index == s.size())
     {
         allSubstrings.push_back(substrings);
+        auto x = substrings.size();
     }
     for (int i = index; i < s.size(); ++i) // ⚠️ for starts from the `index` as [we want the substring to continue after the previous substring]
     {
         string tmp = s.substr(index, i - index + 1);
-        cerr << tmp;
+        // cerr << tmp;
 
         if (isPalindrome(s, index, i))
         {
-            cerr << "..." << tmp;
+            // cerr << "..." << tmp;
 
             substrings.push_back(s.substr(index, i - index + 1)); // calling recursion with the updated substrings
             addPalindromePartitions(i + 1, s, substrings, allSubstrings);
             substrings.pop_back();
         }
-        cerr << endl;
+        // cerr << endl;
     }
 }
 
@@ -56,9 +59,8 @@ vector<vector<string>> partition(string s)
 
 int main()
 {
-    // string s;
-    // cin >> s;
-    string s = "aab";
+    string s;
+    cin >> s;
     vector<vector<string>> result = partition(s);
 
     for (int i = 0; i < result.size(); i++)

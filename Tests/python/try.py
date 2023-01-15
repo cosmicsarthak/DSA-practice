@@ -11,7 +11,7 @@ class Item:
         self.f_price.append(price)
         self.f_quantity.append(quantity)
         print("\n*******  Displaying Fruit Shop  *******")
-        # Item.display()  # calling  display()  to print the items | price | quantity
+        # self.display()  # calling  display()  to print the items | price | quantity
 
     def purchase(self):  # subtracting quantity....
         name = input(
@@ -26,34 +26,33 @@ class Item:
         m1 = input("\nAdd a new item to the shop: ")
         m2 = int(input("Enter the price of the new item: "))
         m3 = int(input("Enter the quantity of the new item: "))
-        Item.grocery.append(m1)  # appending the new product...
-        Item.f_price.append(m2)  # appending the price of the new product..
-        Item.f_quantity.append(m3)  # appending the quantity..
+        self.grocery.append(m1)  # appending the new product...
+        self.f_price.append(m2)  # appending the price of the new product..
+        self.f_quantity.append(m3)  # appending the quantity..
 
     def display(self):
         print("\n Available Items in shop...\n")
         i = 0
-        while i < len(Item.grocery):
+        while i < len(self.grocery):
             print(
-                f"name: {Item.grocery[i]} | price: {Item.f_price[i]} | quantity: {Item.f_quantity[i]}(kg)")
+                f"name: {self.grocery[i]} | price: {self.f_price[i]} | quantity: {self.f_quantity[i]}(kg)")
             i += 1
 
 
 print("\n*******  Welcome to the Fruit Shop  *******")
-name = input("Add item to the shop: ")
-price = int(input("Add price of the item: "))
-quantity = int(input("Add quantity of the item: "))
-s = Item(name, price, quantity)
-s.display()
-s.increaseStock()
-s.display()
-s.purchase()
-s.display()
-# choice = 1
-# while choice:
-# choice = 0
-# s.purchase()
-# s.increaseStock()
-# s.display()
-# choice = int(input("Press 1 - 'continue' or Press 0 - 'exit': "))
-c = input()
+
+
+choice = 1
+while choice:
+    if choice == 1:
+        name = input("Add item to the shop: ")
+        price = int(input("Add price of the item: "))
+        quantity = int(input("Add quantity of the item: "))
+        s = Item(name, price, quantity)
+        s.display()
+    if choice == 2:
+        s.increaseStock()
+    if choice == 3:
+        s.purchase()
+    choice = int(input(
+        "Press '1' - add item or Press '2' - Increase stock: or Press '3' - Purchase "))

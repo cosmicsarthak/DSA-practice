@@ -26,7 +26,7 @@ void addPalindromePartitions(int index, string &s, vector<string> &substrings, v
 
         addPalindromePartitions(i + 1, s, substrings, allSubstrings); // ↷↷ calling recursion with the `updated` substrings
         substrings.pop_back();                                        // backtracking , Also, when one index is finished, the previous index will start from this Line ..
-                                                                      // E.g.: when 3 is over, 2 will start from this line and thus another element will be removed from the substrings
+                                                                      // E.g.: when pos=3 is over, pos=2 will start from this line and thus another element will be removed from the substrings
 
         p(substrings, index);
         cerr << "-" << endl; // just debugging

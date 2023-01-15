@@ -5,6 +5,8 @@
     "cstdlib": "c",
     "string.h": "c",
     "cstring": "c",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "cmath": "cpp",
+    "complex": "cpp"
   }
 }
