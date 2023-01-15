@@ -4,6 +4,7 @@
     "bitset": "cpp",
     "cstdlib": "c",
     "string.h": "c",
-    "cstring": "c"
+    "cstring": "c",
+    "ostream": "cpp"
   }
 }

@@ -8,18 +8,11 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    string s;
-    cin >> s;
-    int mx = -1e5;
-
-    for (int i = 0; i < s.size(); i++)
+    string x = "hello";
+    if (x.size() > -1)
     {
-        for (int j = i; j < s.size(); j++)
-        {
-        }
+        cout << "YES";
     }
-
-    cout << mx;
 
     return 0;
 }

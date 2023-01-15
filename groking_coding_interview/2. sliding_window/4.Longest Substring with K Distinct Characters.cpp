@@ -1,4 +1,4 @@
-/*
+/*  https://practice.geeksforgeeks.org/problems/longest-k-unique-characters-substring0853/1
 Given a string, find the length of the longest substring in it with no more than K distinct characters.
 
 Example 1:

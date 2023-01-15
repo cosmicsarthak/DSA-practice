@@ -4,10 +4,10 @@ using namespace std;
 #define ll long long
 #define endl '\n'
 
-vector<vector<int>> ans;
-vector<int> sub;
+vector<vector<string>> ans;
+vector<string> sub;
 
-void roo(vector<int> &v, vector<int> &sub, int i)
+void roo(vector<string> &v, vector<string> &sub, int i)
 {
     if (i == v.size())
     {
@@ -27,7 +27,7 @@ int main()
 
     int n;
     cin >> n;
-    vector<int> v(n);
+    vector<string> v(n);
     for (auto &el : v)
     {
         cin >> el;
