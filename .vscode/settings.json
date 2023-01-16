@@ -7,6 +7,13 @@
     "cstring": "c",
     "ostream": "cpp",
     "cmath": "cpp",
-    "complex": "cpp"
+    "complex": "cpp",
+    "array": "cpp",
+    "string_view": "cpp",
+    "stacktrace": "cpp",
+    "chrono": "cpp",
+    "random": "cpp",
+    "limits": "cpp",
+    "valarray": "cpp"
   }
 }
