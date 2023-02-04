@@ -1,59 +1,19 @@
-class Item:
-    grocery = []  # string type
-    f_price = []   # int type
-    f_quantity = []   # int type [in kg]
-
-    def __init__(self, name, price, quantity):
-        # self.name = name
-        # self.price = price
-        # self.quantity = quantity
-        self.grocery.append(name)
-        self.f_price.append(price)
-        self.f_quantity.append(quantity)
-        print("\n*******  Displaying Fruit Shop  *******")
-        # Item.display()  # calling  display()  to print the items | price | quantity
-
-    def purchase(self):  # subtracting quantity....
-        name = input(
-            "\nEnter the name of the item(must be present in the shop) to purchase: ")
-        num = int(input("Enter the quantity to purchase: "))
-
-        index = self.grocery.index(name)  # get index by name
-        # delete the user quantity with actual quantity
-        self.f_quantity[index] -= num
-
-    def increaseStock(self):  # adding quantiy...
-        m1 = input("\nAdd a new item to the shop: ")
-        m2 = int(input("Enter the price of the new item: "))
-        m3 = int(input("Enter the quantity of the new item: "))
-        Item.grocery.append(m1)  # appending the new product...
-        Item.f_price.append(m2)  # appending the price of the new product..
-        Item.f_quantity.append(m3)  # appending the quantity..
-
-    def display(self):
-        print("\n Available Items in shop...\n")
-        i = 0
-        while i < len(Item.grocery):
-            print(
-                f"name: {Item.grocery[i]} | price: {Item.f_price[i]} | quantity: {Item.f_quantity[i]}(kg)")
-            i += 1
+def sls(ls, n):
+    if n == 0:
+        return 0
+    else:
+        return ls[n-1] + sls(ls, n-1)
 
 
-print("\n*******  Welcome to the Fruit Shop  *******")
-name = input("Add item to the shop: ")
-price = int(input("Add price of the item: "))
-quantity = int(input("Add quantity of the item: "))
-s = Item(name, price, quantity)
-s.display()
-s.increaseStock()
-s.display()
-s.purchase()
-s.display()
-# choice = 1
-# while choice:
-# choice = 0
-# s.purchase()
-# s.increaseStock()
-# s.display()
-# choice = int(input("Press 1 - 'continue' or Press 0 - 'exit': "))
-c = input()
+def main():
+    s = input().split()
+    print(s)
+    ls = []
+    for i in s:
+        ls.append(int(i))
+    print(ls)
+    n = len(ls)
+    print(sls(ls, n))
+
+
+main()

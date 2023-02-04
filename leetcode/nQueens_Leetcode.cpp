@@ -19,6 +19,14 @@ void foo(vector<string> &board, int row, int n, vector<int> &primary_diagonal, v
     if (row == n)
     {
         ans.emplace_back(board);
+
+        for (auto &el : board)
+        {
+            for (auto &el2 : el)
+                cerr << el2 << " ";
+            cerr << endl;
+        }
+        cerr << endl;
         return;
     }
     for (int col = 0; col < n; col++)
