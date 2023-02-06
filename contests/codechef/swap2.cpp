@@ -1,49 +1,57 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl '\n'
-#define ll long long
+
+int n;
+vector<vector<int>> ans;
+unordered_map<int, int> mp; // has map
+
+void foo(vector<int> &nums, vector<int> &perm)
+{
+    if (perm.size() == nums.size())
+    {
+        ans.emplace_back(perm);
+        return;
+    }
+
+    for (auto &el : mp)
+    {
+        if (el.second > 0)
+        {
+            --el.second;
+            perm.emplace_back(el.first);
+            foo(nums, perm);
+            ++el.second;
+            perm.pop_back();
+        }
+    }
+}
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    int t;
-    cin >> t;
-    while (t--)
+    vector<int> nums = {1, 1, 2};
+    n = nums.size();
+    vector<int> perm;
+
+    for (auto el : nums)
     {
-        int n;
-        cin >> n;
-        vector<int> v(2 * n);
-        for (auto &el : v)
-            cin >> el;
-
-        vector<int> tmp = v;
-        sort(tmp.begin(), tmp.end());
-        unordered_set<int> st(tmp.begin() + n, tmp.end());
-
-        ll ans = 0;
-        for (int i = n - 1; i >= 0; i--)
-        {
-            for (int j = i; j < i + n; j++)
-            {
-                cerr << j << '(' << v[j] << "," << v[j + 1] << ")"
-                     << "  ";
-                for (auto &el : v)
-                    cerr << el << ".";
-                if ((st.count(v[j])) && (v[j] > v[j + 1]))
-                {
-                    swap(v[j], v[j + 1]);
-                    ++ans;
-                    cerr << "... ";
-                    for (auto &el : v)
-                        cerr << el << ".";
-                }
-                cerr << endl;
-            }
-        }
-        // for (auto &el : v)
-        //     cerr << el << " ";
-        // cerr << endl;
-        cout << ans << endl;
+        ++mp[el];
     }
+
+    foo(nums, perm);
+
+    for (auto el : ans)
+    {
+        cout << "[";
+        for (auto el2 : el)
+        {
+            cout << el2 << " ";
+        }
+        cout << "]" << endl;
+    }
+
     return 0;
 }

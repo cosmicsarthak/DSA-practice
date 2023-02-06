@@ -7,8 +7,17 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vector<int> v = {2, 1, 5, 1, 3, 2};
-    int k = 3, n = v.size();
+    string s;
+    getline(cin, s);
+    istringstream ss(s);
+    vector<int> v;
+    int tmp;
+    while (ss >> tmp)
+        v.emplace_back(tmp);
+    int k;
+    cin >> k;
+    int n = v.size();
+
     int window_size = 0, window_sum = 0, window_start = 0;
     int mx = 0;
     int ans_st;
@@ -26,8 +35,8 @@ int main()
             if (window_sum > mx)
             {
                 mx = window_sum;
-                ans_st = window_start;
-                ans_end = window_end;
+                ans_st = window_start; // ans starting index
+                ans_end = window_end;  // ans ending index
             }
         }
     }
@@ -37,7 +46,7 @@ int main()
 
     cout << mx << endl;
     for (auto &el : ans)
-        cout << el << " ";
+        cerr << el << " ";
 
     return 0;
 }

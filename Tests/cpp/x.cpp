@@ -1,61 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define endl '\n'
 
-typedef vector<int> vi;
-typedef pair<int, int> pii;
-#define endl "\n"
-#define sd(val) scanf("%d", &val)
-#define ss(val) scanf("%s", &val)
-#define sl(val) scanf("%lld", &val)
-#define debug(val) printf("check%d\n", val)
-#define all(v) v.begin(), v.end()
-#define PB push_back
-#define MP make_pair
-#define FF first
-#define SS second
-#define ll long long
-#define MOD 1000000007
-#define clr(val) memset(val, 0, sizeof(val))
-#define what_is(x) cerr << #x << " is " << x << endl;
-#define FIO                           \
-    ios_base::sync_with_stdio(false); \
-    cin.tie(NULL);                    \
-    cout.tie(NULL);
+int n;
+vector<vector<int>> ans;
+unordered_map<int, int> mp; // has map
 
-int countPrimes(int n)
+void foo(vector<int> &nums, vector<int> &perm)
 {
-    int count = 0;
-    for (int i = 2; i < n; i++)
+    // base
+    if (perm.size() == n)
     {
-        bool flag = true;
-        for (int j = 2; j <= sqrt(i); j++)
+        ans.emplace_back(perm);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (mp.at(nums.at(i)) != 0)
         {
-            if (i % j == 0 && i != j)
-            {
-                cout << "b__" << i << endl;
-                flag = false;
-                break;
-            }
-        }
-        if (flag)
-        {
-            cerr << i << " ";
-            ++count;
+            perm.emplace_back(nums.at(i));
+            --mp.at(nums.at(i));
+            foo(nums, perm);
+            perm.pop_back();
+            ++mp.at(nums.at(i));
         }
     }
-
-    return count;
 }
 
 int main()
 {
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    vector<int> nums = {1, 2, 3};
+    n = nums.size();
+    vector<int> perm;
 
-    cout << countPrimes(10);
+    for (auto el : nums)
+    {
+        ++mp[el];
+    }
+
+    foo(nums, perm);
+
+    for (auto el : ans)
+    {
+        cout << "[";
+        for (auto el2 : el)
+        {
+            cout << el2 << " ";
+        }
+        cout << "]" << endl;
+    }
 
     return 0;
 }
