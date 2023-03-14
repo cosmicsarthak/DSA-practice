@@ -17,6 +17,7 @@
     "valarray": "cpp",
     "compare": "cpp",
     "stdexcept": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "vector": "cpp"
   }
 }

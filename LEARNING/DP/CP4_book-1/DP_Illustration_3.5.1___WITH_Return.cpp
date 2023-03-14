@@ -3,22 +3,23 @@ using namespace std;
 #define endl '\n'
 #define ll long long
 
-int res = 0;
+int res = -1e6;
 
-void foo(vector<vector<int>> &v, int bud, int row, int ans, int org)
+int foo(vector<vector<int>> &v, int bud, int row, int orig, int mn)
 {
-    cerr << bud << "   ";
-    if (bud <= org)
+    if (row == v.size())
     {
-        ans = max(ans, bud);
-        res = ans;
+        if ((orig - bud) <= orig)
+        {
+            res = max(orig - bud, res);
+        }
+        return;
     }
 
     for (int col = 0; col < v.at(row).size(); col++)
     {
-        row =
-            bud -= v.at(row).at(col);
-        foo(v, bud, row + 1, ans, org);
+        bud -= v.at(row).at(col);
+        foo(v, bud, row + 1, orig, mn);
         bud += v.at(row).at(col);
     }
 }
@@ -34,11 +35,7 @@ int main()
     {
         int bud, n;
         cin >> bud >> n;
-        int org = bud;
         vector<vector<int>> v(n);
-
-        // cerr << bud << endl
-        //      << n << endl;
 
         for (auto &el : v)
         {
@@ -50,16 +47,17 @@ int main()
             {
                 cin >> tmp;
                 el.emplace_back(tmp);
-                // cerr << tmp << " ";
             }
-            // cerr << endl;
         }
-        // cerr << endl;
 
-        int row = 0, ans = 1e6;
-        foo(v, bud, row, ans, org);
-        cout << res << endl;
-        res = 0;
+        int row = 0, orig = bud, mn = 1e6;
+        foo(v, bud, row, orig, mn);
+        if (res > 0)
+            cout << res << endl;
+        else
+            cout << "no solution" << endl;
+        res = -1e6;
+        cerr << endl;
     }
 
     return 0;
