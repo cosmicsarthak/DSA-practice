@@ -5,22 +5,22 @@ using namespace std;
 
 int res = -1e6;
 
-void foo(vector<vector<int>> &v, int bud, int row, int orig, int mn)
+void foo(vector<vector<int>> &v, int budget, int row, int orig)
 {
     if (row == v.size())
     {
-        if ((orig - bud) <= orig)
+        if ((orig - budget) <= orig)
         {
-            res = max(orig - bud, res);
+            res = max(orig - budget, res);
         }
         return;
     }
 
     for (int col = 0; col < v.at(row).size(); col++)
     {
-        bud -= v.at(row).at(col);
-        foo(v, bud, row + 1, orig, mn);
-        bud += v.at(row).at(col);
+        budget -= v.at(row).at(col);
+        foo(v, budget, row + 1, orig);
+        budget += v.at(row).at(col);
     }
 }
 
@@ -33,8 +33,8 @@ int main()
     cin >> t;
     while (t--)
     {
-        int bud, n;
-        cin >> bud >> n;
+        int budget, n;
+        cin >> budget >> n;
         vector<vector<int>> v(n);
 
         for (auto &el : v)
@@ -50,8 +50,8 @@ int main()
             }
         }
 
-        int row = 0, orig = bud, mn = 1e6;
-        foo(v, bud, row, orig, mn);
+        int row = 0, orig = budget;
+        foo(v, budget, row, orig);
         if (res > 0)
             cout << res << endl;
         else
