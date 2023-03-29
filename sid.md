@@ -12,9 +12,9 @@
 
 ---
 
-# Educative Grokking the Coding Interviews
+# Educative Grokking the
 
-- Sliding Windows
+- all
 
 ---
 
