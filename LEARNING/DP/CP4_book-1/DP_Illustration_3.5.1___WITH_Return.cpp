@@ -3,25 +3,28 @@ using namespace std;
 #define endl '\n'
 #define ll long long
 
-int res = -1e6;
+int MAX_price = 210;
+int MAX_gar = 30;
+int MAX_K = 30;
+int M, C;
+vector<vector<int>> v(MAX_gar);
+vector<vector<int>> memo(MAX_gar); // table
 
-int foo(vector<vector<int>> &v, int bud, int row, int orig, int mn)
+int dp(int row, int bud)
 {
-    if (row == v.size())
+    if (bud < 0)
+        return -1e9;
+    if (row == C)
+        return M - bud; // bud is remaining budget
+    if (memo[row][bud] != -1)
+        return memo[row][bud];
+    int ans = -1;
+    for (int k = 1; k <= v.at(row).at(0); k++)
     {
-        if ((orig - bud) <= orig)
-        {
-            res = max(orig - bud, res);
-        }
-        return;
+        ans = max(ans, dp(row + 1, bud - v.at(row).at(k)));
     }
-
-    for (int col = 0; col < v.at(row).size(); col++)
-    {
-        bud -= v.at(row).at(col);
-        foo(v, bud, row + 1, orig, mn);
-        bud += v.at(row).at(col);
-    }
+    memo[row][bud] = ans;
+    return ans;
 }
 
 int main()
@@ -33,32 +36,43 @@ int main()
     cin >> t;
     while (t--)
     {
-        int bud, n;
-        cin >> bud >> n;
-        vector<vector<int>> v(n);
-
-        for (auto &el : v)
+        fill(v.begin(), v.end(), vector<int>(MAX_K, -1));
+        fill(memo.begin(), memo.end(), vector<int>(MAX_price, -1));
+        cin >> M >> C;
+        for (int row = 0; row < C; row++)
         {
-            int n1;
-            cin >> n1;
-            int tmp;
-            // cerr << n1 << " ";
-            for (int j = 0; j < n1; j++)
+            cin >> v.at(row).at(0);
+            for (int i = 1; i <= v.at(row).at(0); i++)
             {
-                cin >> tmp;
-                el.emplace_back(tmp);
+                cin >> v.at(row).at(i);
             }
         }
 
-        int row = 0, orig = bud, mn = 1e6;
-        foo(v, bud, row, orig, mn);
-        if (res > 0)
-            cout << res << endl;
+        int bud = M, row = 0;
+        int ans = dp(row, bud);
+        if (ans >= 0)
+            cout << ans << endl;
         else
-            cout << "no solution" << endl;
-        res = -1e6;
-        cerr << endl;
+            cout << "no sol" << endl;
     }
 
     return 0;
 }
+/*
+3
+
+9 3
+3 6 4 8
+2 5 10
+4 1 5 3 5
+
+12 3
+3 6 4 8
+2 5 10
+4 1 5 3 5
+
+20 3
+3 6 4 8
+2 5 10
+4 1 5 3 5
+ */

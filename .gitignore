@@ -1,0 +1,6 @@
+*.bin
+*.exe
+*.prob
+**/.cph/
+
+# also add .prob
