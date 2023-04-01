@@ -18,14 +18,14 @@ int dp(int g, int b)
     if (g == C)
         return M - b; // we are done
     // if the line below is commented, top-down DP will become backtracking!!
-    // if (memo[g][b] != -1)
-    //     return memo[g][b];                 // TOP-DOWN: memoization
+    if (memo[g][b] != -1)
+        return memo[g][b];                 // TOP-DOWN: memoization
     int ans = -1;                          // start with a -ve number
     for (int k = 1; k <= price[g][0]; ++k) // try each model k
         ans = max(ans, dp(g + 1, b - price[g][k]));
     // memo[g][b] = ans;
-    return ans;
-    // return memo[g][b] = ans; // TOP-DOWN: memoize ans
+    // return ans;
+    return memo[g][b] = ans; // TOP-DOWN: memoize ans
 }
 
 int main()
@@ -46,6 +46,13 @@ int main()
             printf("no solution\n"); // start the top-down DP
         else
             printf("%d\n", dp(0, M));
+
+        for (auto &el : memo)
+        {
+            for (auto e : el)
+                cerr << e << " ";
+            cerr << endl;
+        }
     }
     return 0;
 }

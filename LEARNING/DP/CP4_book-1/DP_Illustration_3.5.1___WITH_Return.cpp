@@ -54,6 +54,13 @@ int main()
             cout << ans << endl;
         else
             cout << "no sol" << endl;
+
+        for (auto &el : memo)
+        {
+            for (auto e : el)
+                cerr << e << " ";
+            cerr << endl;
+        }
     }
 
     return 0;
