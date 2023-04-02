@@ -3,9 +3,12 @@ using namespace std;
 #define endl '\n'
 #define ll long long
 
-int MAX_price = 210;
-int MAX_gar = 30;
-int MAX_K = 30;
+int MAX_price = 13;
+int MAX_gar = 3;
+int MAX_K = 5;
+// int MAX_price = 210;
+// int MAX_gar = 30;
+// int MAX_K = 30;
 int M, C;
 vector<vector<int>> v(MAX_gar);
 vector<vector<int>> memo(MAX_gar); // table
@@ -25,6 +28,22 @@ int dp(int row, int bud)
     }
     memo[row][bud] = ans;
     return ans;
+}
+
+void print_dp(int row, int bud) // VOID function
+{
+    if ((row == C) || (bud < 0))
+        return;                          // similar base cases
+    for (int k = 1; k <= v[row][0]; ++k) // which model k is opt?
+    {
+        if (dp(row + 1, bud - v[row][k]) == memo[row][bud]) // using memo[][] created above in `dp()` function
+        {
+            cout << "- " << v[row][k] << " ";
+            print_dp(row + 1, bud - v[row][k]); // recurse to this only
+            // break;
+        }
+    }
+    cout << endl;
 }
 
 int main()
@@ -54,13 +73,7 @@ int main()
             cout << ans << endl;
         else
             cout << "no sol" << endl;
-
-        for (auto &el : memo)
-        {
-            for (auto e : el)
-                cerr << e << " ";
-            cerr << endl;
-        }
+        print_dp(row, bud);
     }
 
     return 0;
