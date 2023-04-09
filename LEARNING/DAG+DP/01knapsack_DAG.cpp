@@ -11,13 +11,29 @@ int W;
 vector<int> val;
 vector<int> wt;
 vector<vector<bool>> checkDAG(maxN, vector<bool>(maxW, false));
+vector<vector<bool>> checkVisited(maxN, vector<bool>(maxW, false));
 
 // vector<vector<pair<int, pair<int, int>>>> DAG(N); // DAG = [ rem_wt, [(vertex,edge_wt), (,), ..] ]
 
 // DAG = [ [ ((vertex,remWt), edge_wt), ((vertex,remWt), edgeWt), ...] ]
-vector<vector<pair<pair<int, int>, int>>> DAG(N);
+vector<vector<pair<pair<int, int>, int>>> DAG;
+vector<pair<int, int>> toposortedVec;
 
-void convertToDAG()
+void toposort(int u, int w)
+{
+    checkVisited[u][w] = true;
+
+    for (auto &el : DAG[u])
+    {
+        if (checkVisited[el.first.first][el.first.second] == false) // 'v' is being marked unvisited
+        {
+            toposort(el.first.first, el.first.second); // 'v' is being called for toposort
+        }
+    }
+    toposortedVec.emplace_back(u, w);
+}
+
+void createDAG()
 {
     // giving values to DAG
     vector<int> oldWtTmp;
@@ -26,31 +42,58 @@ void convertToDAG()
     {
         vector<int> newWtTmp;
         pair<int, int> pr;
+        vector<pair<pair<int, int>, int>> tmpPairVec;
         for (auto el : oldWtTmp)
         {
-            vector<pair<pair<int, int>, int>> tmpPrVec;
-            if (!checkDAG[u + 1][el])
-            {
-                pr = {u + 1, el};
-                tmpPrVec.emplace_back(pr, 0);
-                newWtTmp.emplace_back(el);
-                checkDAG[u + 1][el] = true;
-            }
+            // if (!checkDAG[u + 1][el])
+            // {
+            pr = {u + 1, el};
+            tmpPairVec.emplace_back(pr, 0);
+            newWtTmp.emplace_back(el);
+            checkDAG[u + 1][el] = true;
+            // }
 
             if ((el - wt[u]) >= 0) // el is one value of oldWtTmp
             {
-                if (!checkDAG[u + 1][el - wt[u]])
-                {
-                    pr = {u + 1, el - wt[u]};
-                    tmpPrVec.emplace_back(pr, val[u]);
-                    newWtTmp.emplace_back(el - wt[u]);
-                    checkDAG[u + 1][el - wt[u]] = false;
-                }
+                // if (!checkDAG[u + 1][el - wt[u]])
+                // {
+                pr = {u + 1, el - wt[u]};
+                tmpPairVec.emplace_back(pr, val[u]);
+                newWtTmp.emplace_back(el - wt[u]);
+                checkDAG[u + 1][el - wt[u]] = true;
+                // }
             }
-            DAG.emplace_back(tmpPrVec);
         }
+        DAG.emplace_back(tmpPairVec);
         oldWtTmp = newWtTmp;
     }
+
+    // PRINT
+    for (int i = 0; i < DAG.size(); i++)
+    {
+        cerr << "🔢" << DAG[i].size() << endl;
+        for (int j = 0; j < DAG[i].size(); j++)
+        {
+            // if (checkDAG[i][j])
+            // {
+            auto e = DAG[i][j];
+            cerr << i << ","
+                 << j
+                 << "__.."
+                 << "(" << e.first.first << " " << e.first.second << ")," << e.second << endl;
+            // }
+        }
+        cerr << endl;
+    }
+    // cerr << ">>" << DAG.size() << ".." << endl
+    //      << endl;
+    // for (auto &el : DAG)
+    // {
+    //     cerr << el.size() << endl;
+    //     // for (auto &e : el)
+    //     //     cout << "(" << e.first.first << " " << e.first.second << ")," << e.second << " ";
+    //     // cout << endl;
+    // }
 }
 
 int main()
@@ -60,21 +103,22 @@ int main()
 
     // n = 5, val = {4, 2, 10, 1, 2}, wt = {12, 1, 4, 1, 2}, W = 15
     cin >> N >> W;
-    val.assign(N, 0);
-    wt.assign(N, 0);
+    val.resize(N, 0);
+    wt.resize(N, 0);
     for (auto &el : val)
         cin >> el;
     for (auto &el : wt)
         cin >> el;
-    cerr << val.size();
-    cerr << wt.size();
 
-    convertToDAG();
+    createDAG();
 
-    for (auto &el : DAG)
+    for (int u = 0; u < N; u++)
     {
-        for (auto &e : el)
-            cout << "(" << e.first.first << " " << e.first.second << ")," << e.second << " ";
+        for (int w = W; w >= 0; w--)
+        {
+            if (checkVisited[u][w] == false)
+                toposort(u, w);
+        }
         cout << endl;
     }
 
