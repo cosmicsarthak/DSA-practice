@@ -1,10 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-vector<int> memo(1e4, -1);
+int N;
+int W;
+vector<int> val;
+vector<int> wt;
 
 int main()
 {
-    for (auto &el : memo)
-        cout << el << " ";
+
+    cin >> N >> W;
+
+    wt.assign(N, 0);
+    val.assign(N, 0);
+    for (auto &el : val)
+        cin >> el;
+    for (auto &el : wt)
+        cin >> el;
+    cerr << N << " " << W << endl;
+    cerr << val.size();
+    cerr << wt.size();
 }
