@@ -1,14 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int foo()
-{
-    int a = 90;
-
-    return a = 999;
-}
+vector<int> memo(1e4, -1);
 
 int main()
 {
-    cout << foo();
+    for (auto &el : memo)
+        cout << el << " ";
 }

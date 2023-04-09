@@ -4,7 +4,7 @@ using namespace std;
 #define ll long long
 
 int MAX_price = 13;
-int MAX_gar = 3;
+int MAX_gar = 4;
 int MAX_K = 5;
 // int MAX_price = 210;
 // int MAX_gar = 30;

@@ -4,8 +4,8 @@ using namespace std;
 
 // 3 edge cases
 // i. taking 1st char and replacing next k char
-// ii. reverse and then taking 1st char & replacing next k char
-// ii. 1st and last both have to be changed
+// pair<int, int>. reverse and then taking 1st char & replacing next k char
+// pair<int, int>. 1st and last both have to be changed
 // iii. if k digits have not been replaced, then check in circular form or (if and last are same)
 
 int characterReplacement(string s, int k)
@@ -50,7 +50,7 @@ int characterReplacement(string s, int k)
     }
     cout << endl;
 
-    // ii. 1st and last both have to be changed
+    // pair<int, int>. 1st and last both have to be changed
     string revs = s;
     reverse(revs.begin(), revs.end());
     for (int i = 0; i < n; i++)
