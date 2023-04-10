@@ -13,11 +13,19 @@ vector<int> wt;
 vector<vector<bool>> checkDAG(maxN, vector<bool>(maxW, false));
 vector<vector<bool>> checkVisited(maxN, vector<bool>(maxW, false));
 
-// vector<vector<pair<int, pair<int, int>>>> DAG(N); // DAG = [ rem_wt, [(vertex,edge_wt), (,), ..] ]
-
 // DAG = [ [ ((vertex,remWt), edge_wt), ((vertex,remWt), edgeWt), ...] ]
 vector<vector<pair<pair<int, int>, int>>> DAG;
 vector<pair<int, int>> toposortedVec;
+
+vector<int> longDist;
+
+void longestPath()
+{
+    longDist.resize(N * W, -1e9);
+    for (auto &el : toposortedVec)
+    {
+    }
+}
 
 void toposort(int u, int w)
 {
@@ -25,9 +33,10 @@ void toposort(int u, int w)
 
     for (auto &el : DAG[u])
     {
+        // cout << el.first.first << "," << el.first.second << endl;
         if (checkVisited[el.first.first][el.first.second] == false) // 'v' is being marked unvisited
         {
-            toposort(el.first.first, el.first.second); // 'v' is being called for toposort
+            toposort(el.first.first, el.first.second);
         }
     }
     toposortedVec.emplace_back(u, w);
@@ -112,15 +121,25 @@ int main()
 
     createDAG();
 
+    // toposort
     for (int u = 0; u < N; u++)
     {
         for (int w = W; w >= 0; w--)
         {
-            if (checkVisited[u][w] == false)
-                toposort(u, w);
+            if (checkDAG[u][w])
+            {
+                if (checkVisited[u][w] == false)
+                    toposort(u, w);
+            }
         }
-        cout << endl;
     }
+
+    reverse(toposortedVec.begin(), toposortedVec.end());
+    for (auto el : toposortedVec)
+        cout << "(" << el.first << "," << el.second << ")  ";
+    cout << endl;
+
+    longestPath();
 
     return 0;
 }
