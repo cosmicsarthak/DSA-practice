@@ -4,13 +4,13 @@ using namespace std;
 #define ll long long
 
 // 0/1 knapsack Input:
-int maxN = 1005;
-int maxW = 1005;
+int maxN = 1e3 + 5;
+int maxW = 1e5 + 5;
 int N;
 int W;
 vector<int> val;
 vector<int> wt;
-vector<vector<bool>> DAGavailable(maxN, vector<bool>(maxW, false));
+vector<vector<bool>> DAG_Open_to_add(maxN, vector<bool>(maxW, false));
 vector<vector<bool>> checkVisited(maxN, vector<bool>(maxW, false));
 
 vector<vector<vector<pair<pair<int, int>, int>>>> DAG;
@@ -18,7 +18,7 @@ vector<pair<int, int>> toposortedVec;
 
 vector<vector<int>> longDist; // to store the the dist of all [vertices/nodes from ToposortedVec] to [their particular corresponding nodes int the DAG]
 
-int topsum = 0;
+int totalcount = 0;
 
 void longestPath()
 {
@@ -67,35 +67,28 @@ void createDAG() // O( N*W*2 )
 {
     DAG.assign(N + 1, vector<vector<pair<pair<int, int>, int>>>(W + 1)); // I will be calling for [0][15] or [5][15]
     pair<int, int> pr;
-    vector<int> oldWt;
-    oldWt.emplace_back(W);
-    cerr << "📌" << N << endl
-         << endl;
+    DAG_Open_to_add.at(0).at(W) = true;
+
     for (int u = 0; u < N; u++) // 'u' is the 'id' of knapsack
     {
-        vector<int> newWt;
-        cerr << oldWt.size() << endl;
-        for (auto &el : oldWt)
+        for (int remW = W; remW >= 0; remW--)
         {
-            if (!DAGavailable[u][el])
+            ++totalcount;
+            if (DAG_Open_to_add[u][remW])
             {
-                pr = {u + 1, el};
-                newWt.emplace_back(el);
-                DAG.at(u).at(el).emplace_back(pr, 0); // e.g::  DAG[1][15] = [ (2,15),0   (2,14),2  ]
+                pr = {u + 1, remW};
+                DAG.at(u).at(remW).emplace_back(pr, 0);
+                DAG_Open_to_add.at(u + 1).at(remW) = true;
 
-                if (el - wt[u] >= 0)
+                if (remW - wt[u] >= 0)
                 {
-                    pr = {u + 1, el - wt[u]};
-                    newWt.emplace_back(el - wt[u]);
-                    DAG.at(u).at(el).emplace_back(pr, val[u]);
+                    pr = {u + 1, remW - wt[u]};
+                    DAG.at(u).at(remW).emplace_back(pr, val[u]);
+                    DAG_Open_to_add.at(u + 1).at(remW - wt[u]) = true;
                 }
-                DAGavailable[u][el] = true;
             }
         }
-        // oldWt.clear();
-        oldWt = newWt;
     }
-    DAGavailable.at(0).at(W) = true;
 }
 
 int main()
@@ -103,13 +96,18 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    // n = 5, val = {4, 2, 10, 1, 2}, wt = {12, 1, 4, 1, 2}, W = 15
+    // always reinitialize the Global variables
+    fill(DAG_Open_to_add.begin(), DAG_Open_to_add.end(), vector<bool>(maxW, false));
+    fill(checkVisited.begin(), checkVisited.end(), vector<bool>(maxW, false));
+    toposortedVec.clear();
+    longDist.clear();
+
     cin >> N >> W;
     val.resize(N, 0);
     wt.resize(N, 0);
-    for (auto &el : val)
-        cin >> el;
     for (auto &el : wt)
+        cin >> el;
+    for (auto &el : val)
         cin >> el;
 
     createDAG();
@@ -119,7 +117,7 @@ int main()
     {
         for (int w = W; w >= 0; w--)
         {
-            if (DAGavailable.at(u).at(w))
+            if (DAG_Open_to_add.at(u).at(w))
                 if (!checkVisited.at(u).at(w))
                     toposort(u, w);
         }

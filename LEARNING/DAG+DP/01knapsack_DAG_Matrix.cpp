@@ -18,6 +18,8 @@ vector<pair<int, int>> toposortedVec;
 
 vector<vector<int>> longDist; // to store the the dist of all [vertices/nodes from ToposortedVec] to [their particular corresponding nodes int the DAG]
 
+int totalcount = 0;
+
 void longestPath()
 {
     // src node is [0][W] -> also thats my 1st node in the 'reversed toposortedVec'
@@ -66,11 +68,13 @@ void createDAG() // O( N*W*2 )
     pair<int, int> pr;
     vector<int> oldWt;
     oldWt.emplace_back(W);
+
     for (int u = 0; u < N; u++) // 'u' is the 'id' of knapsack
     {
         vector<int> newWt;
         for (auto &el : oldWt)
         {
+            ++totalcount;
             if (!DAGavailable[u][el])
             {
                 pr = {u + 1, el};
@@ -88,13 +92,19 @@ void createDAG() // O( N*W*2 )
         }
         oldWt = newWt;
     }
-    DAGavailable.at(0).at(15) = true;
+    DAGavailable.at(0).at(W) = true;
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
+
+    // always reinitialize the Global variables
+    // fill(DAGavailable.begin(), DAGavailable.end(), vector<bool>(maxW, false));
+    // fill(checkVisited.begin(), checkVisited.end(), vector<bool>(maxW, false));
+    // toposortedVec.clear();
+    // longDist.clear();
 
     // n = 5, val = {4, 2, 10, 1, 2}, wt = {12, 1, 4, 1, 2}, W = 15
     cin >> N >> W;
@@ -118,13 +128,15 @@ int main()
         }
     }
 
-    cerr << "ToposortedVector is: " << endl;
+    // cerr << "ToposortedVector is: " << endl;
     reverse(toposortedVec.begin(), toposortedVec.end());
-    for (auto el : toposortedVec)
-        cerr << "(" << el.first << "," << el.second << ")  ";
-    cerr << endl;
+    // for (auto el : toposortedVec)
+    //     cerr << "(" << el.first << "," << el.second << ")  ";
+    // cerr << endl;
 
     longestPath();
+    cout << endl
+         << "⌚:" << totalcount << endl;
 
     return 0;
 }
