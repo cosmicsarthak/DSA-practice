@@ -69,9 +69,9 @@ void createDAG() // O( N*W*2 )
     pair<int, int> pr;
     DAG_Open_to_add.at(0).at(W) = true;
 
-    for (int u = 0; u < N; u++) // 'u' is the 'id' of knapsack
+    for (int remW = W; remW >= 0; remW--)
     {
-        for (int remW = W; remW >= 0; remW--)
+        for (int u = 0; u < N; u++) // 'u' is the 'id' of knapsack
         {
             ++totalcount;
             if (DAG_Open_to_add[u][remW])
