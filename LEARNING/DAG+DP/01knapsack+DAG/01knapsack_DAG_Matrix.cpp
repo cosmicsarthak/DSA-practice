@@ -130,13 +130,13 @@ int main()
 
     // cerr << "ToposortedVector is: " << endl;
     reverse(toposortedVec.begin(), toposortedVec.end());
-    // for (auto el : toposortedVec)
-    //     cerr << "(" << el.first << "," << el.second << ")  ";
-    // cerr << endl;
+    for (auto el : toposortedVec)
+        cerr << "(" << el.first << "," << el.second << ")  ";
+    cerr << endl;
 
     longestPath();
-    cout << endl
-         << "⌚:" << totalcount << endl;
+    // cout << endl
+    //      << "⌚:" << totalcount << endl;
 
     return 0;
 }
