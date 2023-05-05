@@ -13,7 +13,7 @@ int main()
     for (auto &el : coins)
         cerr << el << ".";
 
-    vector<int> tab(total + 1); // vector<int> tab(total + 1, 1e8);
+    vector<int> tab(total + 1);
 
     // Tablulation
     tab[0] = 0; // somewhat similar to `memo[]`

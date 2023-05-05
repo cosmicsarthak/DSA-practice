@@ -30,29 +30,19 @@ int dp(int g, int b)
 
 int main()
 { // easy to code
-    int TC;
-    scanf("%d", &TC);
-    while (TC--)
-    {
-        scanf("%d %d", &M, &C);
-        for (int g = 0; g < C; ++g)
-        {
-            scanf("%d", &price[g][0]); // store k in price[g][0]
-            for (int k = 1; k <= price[g][0]; ++k)
-                scanf("%d", &price[g][k]);
-        }
-        memset(memo, -1, sizeof memo); // TOP-DOWN: init memo
-        if (dp(0, M) < 0)
-            printf("no solution\n"); // start the top-down DP
-        else
-            printf("%d\n", dp(0, M));
 
-        for (auto &el : memo)
-        {
-            for (auto e : el)
-                cerr << e << " ";
-            cerr << endl;
-        }
-    }
+    if (-1)
+        cout << "-1" << endl;
+    else
+        cout << "not -1" << endl;
+    if (1)
+        cout << "1" << endl;
+    else
+        cout << "not 1" << endl;
+    if (0)
+        cout << "0" << endl;
+    else
+        cout << "not 0" << endl;
+
     return 0;
 }
