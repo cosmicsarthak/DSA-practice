@@ -12,11 +12,12 @@ int main()
 
     vector<int> dp(n, INT_MAX);
     dp[0] = 0;
-    dp[1] = abs(v[1] - v[0]);
 
-    for (int i = 2; i < n; i++)
+    for (int i = 1; i < n; i++)
     {
-        dp[i] = min(dp[i - 1] + abs(v[i - 1] - v[i]), dp[i - 2] + abs(v[i - 2] - v[i]));
+        dp[i] = min(dp[i], dp[i - 1] + abs(v[i - 1] - v[i]));
+        if ((i - 2) >= 0)
+            dp[i] = min(dp[i], dp[i - 2] + abs(v[i - 2] - v[i]));
     }
 
     cout << dp[n - 1];
