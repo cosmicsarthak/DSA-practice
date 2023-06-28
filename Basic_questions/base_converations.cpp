@@ -66,12 +66,13 @@ int main()
     int dec = 22;
     int bin = 10110;
     int oct = 45;
+    string hex = "a46"; // 2630
 
     // cout << binTOdec(bin) << endl;
     // cout << binTOoct(bin) << endl;
 
     // cout << decTOoct(dec) << endl;
-    // cout << decTObin(dec) << endl;
+    cout << decTObin(dec) << endl;
 
     // cout << octTOdec(oct) << endl;
     // cout << octTObin(oct) << endl;
