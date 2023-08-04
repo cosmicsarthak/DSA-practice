@@ -7,8 +7,8 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    freopen("breedflip.in", "r", stdin);
-    freopen("breedflip.out", "w", stdout);
+    // freopen("breedflip.in", "r", stdin);
+    // freopen("breedflip.out", "w", stdout);
 
     int n;
     string a;

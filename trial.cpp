@@ -1,43 +1,52 @@
+
+
 #include <bits/stdc++.h>
+
 using namespace std;
-int N;
-int W;
-vector<int> val;
-vector<int> wt;
-int mx = -1;
-int best;
 
-int dfs(int idx, int w)
+vector<int> FindUnion(int arr1[], int arr2[], int n, int m)
 {
-    if (idx == N)
+    int i = 0, j = 0;  // pointers
+    vector<int> Union; // Uninon vector
+    while (i < n && j < m)
     {
-        return 0;
+        if (arr1[i] <= arr2[j]) // Case 1 and 2
+        {
+            if (Union.size() == 0 || Union.back() != arr1[i])
+                Union.push_back(arr1[i]);
+            i++;
+        }
+        else // case 3
+        {
+            if (Union.size() == 0 || Union.back() != arr2[j])
+                Union.push_back(arr2[j]);
+            j++;
+        }
     }
-
-    if ((w - wt.at(idx)) >= 0)
+    while (i < n) // IF any element left in arr1
     {
-        best = max(dfs(idx + 1, w - wt.at(idx)) + val[idx], dfs(idx + 1, w));
-        return best;
+        if (Union.back() != arr1[i])
+            Union.push_back(arr1[i]);
+        i++;
     }
-    else
+    while (j < m) // If any elements left in arr2
     {
-        best = dfs(idx + 1, w);
-        return best;
+        if (Union.back() != arr2[j])
+            Union.push_back(arr2[j]);
+        j++;
     }
+    return Union;
 }
 
 int main()
+
 {
-    cin >> N >> W;
-    val.resize(N);
-    wt.resize(N);
-
-    for (auto &el : val)
-        cin >> el;
-    for (auto &el : wt)
-        cin >> el;
-
-    cout << dfs(0, W);
-
+    int n = 10, m = 7;
+    int arr1[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int arr2[] = {2, 3, 4, 4, 5, 11, 12};
+    vector<int> Union = FindUnion(arr1, arr2, n, m);
+    cout << "Union of arr1 and arr2 is  " << endl;
+    for (auto &val : Union)
+        cout << val << " ";
     return 0;
 }
