@@ -1,74 +1,48 @@
+#include <fstream>
 #include <iostream>
+#include <string>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::string;
+using std::vector;
+
+vector<int> count_freq(string s)
+{
+    vector<int> freq(26);
+    for (char c : s)
+    {
+        freq[c - 'a']++;
+    }
+    return freq;
+}
 
 int main()
 {
-    int N, M;
-    cin >> N >> M;
-
-    vector<int> roadLengths(N);
-    vector<int> roadSpeeds(N);
-    vector<int> bessieLengths(M);
-    vector<int> bessieSpeeds(M);
-
-    // Read the road segments
-    for (int i = 0; i < N; i++)
+    std::ifstream read("blocks.in");
+    int n;
+    read >> n;
+    vector<std::pair<string, string>> words(n);
+    for (auto &[w1, w2] : words)
     {
-        cin >> roadLengths[i] >> roadSpeeds[i];
+        read >> w1 >> w2;
     }
 
-    // Read Bessie's journey segments
-    for (int i = 0; i < M; i++)
+    vector<int> max_blocks(26);
+    for (const auto &[w1, w2] : words)
     {
-        cin >> bessieLengths[i] >> bessieSpeeds[i];
-    }
-
-    // Calculate cumulative lengths and speeds for both road and Bessie's journey
-    vector<int> roadCumulativeLengths(N);
-    vector<int> bessieCumulativeLengths(M);
-    vector<int> bessieCumulativeSpeeds(M);
-
-    roadCumulativeLengths[0] = roadLengths[0];
-    for (int i = 1; i < N; i++)
-    {
-        roadCumulativeLengths[i] = roadCumulativeLengths[i - 1] + roadLengths[i];
-    }
-
-    bessieCumulativeLengths[0] = bessieLengths[0];
-    bessieCumulativeSpeeds[0] = bessieSpeeds[0];
-    for (int i = 1; i < M; i++)
-    {
-        bessieCumulativeLengths[i] = bessieCumulativeLengths[i - 1] + bessieLengths[i];
-        bessieCumulativeSpeeds[i] = bessieSpeeds[i];
-    }
-
-    int maxOverSpeedLimit = 0;
-    int roadIdx = 0;
-    int bessieIdx = 0;
-
-    // Compare the segments of road and Bessie's journey
-    while (roadIdx < N && bessieIdx < M)
-    {
-        int roadLen = roadCumulativeLengths[roadIdx];
-        int bessieLen = bessieCumulativeLengths[bessieIdx];
-        int roadSpeedLimit = roadSpeeds[roadIdx];
-        int bessieSpeed = bessieCumulativeSpeeds[bessieIdx];
-
-        // Check if Bessie's speed exceeds the road's speed limit
-        if (bessieLen <= roadLen)
+        vector<int> freq1 = count_freq(w1);
+        vector<int> freq2 = count_freq(w2);
+        for (int c = 0; c < 26; c++)
         {
-            maxOverSpeedLimit = max(maxOverSpeedLimit, bessieSpeed - roadSpeedLimit);
-            bessieIdx++;
-        }
-        else
-        {
-            roadIdx++;
+            max_blocks[c] += std::max(freq1[c], freq2[c]);
         }
     }
 
-    cout << maxOverSpeedLimit << endl;
-
-    return 0;
+    std::ofstream written("blocks.out");
+    for (int i : max_blocks)
+    {
+        written << i << '\n';
+    }
 }
