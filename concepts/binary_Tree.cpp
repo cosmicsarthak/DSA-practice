@@ -15,14 +15,16 @@ struct Node
     }
 };
 
+void levelorder(Node *node) // left root right
+{
+}
 void inorder(Node *node) // left root right
 {
     if (node == NULL)
         return;
 
     preorder(node->left);
-    <
-        cout << (node->data);
+    cout << (node->data);
     preorder(node->right);
 }
 void postorder(Node *node) // left right root
@@ -30,9 +32,9 @@ void postorder(Node *node) // left right root
     if (node == NULL)
         return;
 
-    cout << (node->data);
     preorder(node->left);
     preorder(node->right);
+    cout << (node->data);
 }
 void preorder(Node *node) // root left right
 {
