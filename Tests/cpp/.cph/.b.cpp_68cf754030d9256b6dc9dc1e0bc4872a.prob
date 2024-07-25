@@ -1,1 +1,0 @@
-{"name":"Local: b","url":"/home/cosmicsarthak/Documents/DSA-practice/Tests/cpp/b.cpp","tests":[{"id":1675528256553,"input":"........\n........\n..*.....\n........\n........\n.....**.\n...*....\n........","output":"65"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/cosmicsarthak/Documents/DSA-practice/Tests/cpp/b.cpp","group":"local","local":true}

@@ -1,1 +1,0 @@
-{"name":"Local: subset1","url":"/home/cosmicsarthak/Documents/DSA-practice/Tests/cpp/subset1.cpp","tests":[{"id":1673730915468,"input":"4\na b a b","output":""},{"id":1673732644881,"input":"3\na a b","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/cosmicsarthak/Documents/DSA-practice/Tests/cpp/subset1.cpp","group":"local","local":true}
